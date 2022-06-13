@@ -1,10 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+require "open-uri"
 
 puts "Destroying all instances"
 
@@ -16,6 +10,16 @@ puts "Launching seed..."
 
 lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-Project.create(title: "Project", description: lorem, date: "-- MTH ----")
+first_project = {title: "Project", description: lorem, date: "-- MTH ----"}
+project = Project.new(first_project)
+project.save!
+
+puts "First project : done"
+
+file = URI.open("https://source.unsplash.com/random")
+
+puts "URI ok"
+
+project.photos.attach(io: file, filename: "random", content_type: "image/png")
 
 puts "... seed done"
